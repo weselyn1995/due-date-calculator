@@ -7,6 +7,9 @@ WORKING_HOURS_END = 17 # 5PM
 def is_working_hour(hour):
     return WORKING_HOURS_START <= hour < WORKING_HOURS_END
 
+def is_weekday(date):
+    return date.weekday() < 5 # 1-4 are weekdays, 5-6 are Saturday and Sunday
+
 def calculate_due_date(submit_datetime: datetime, turnaround_hours: int) -> datetime:
     """
     Args:
@@ -31,10 +34,10 @@ def calculate_due_date(submit_datetime: datetime, turnaround_hours: int) -> date
     if not turnaround_hours >= 0:
         raise ValueError('turnaround_hours must be 0 or more hours')
 
-    # Process turnaround time in working hours, ignoring weekends
+    # Process turnaround time in working hours
     while turnaround_hours > 0:
         submit_datetime += timedelta(hours = 1)
-        if is_working_hour(submit_datetime.hour):
+        if is_working_hour(submit_datetime.hour) and is_weekday(submit_datetime):
             turnaround_hours -= 1
 
     return submit_datetime
