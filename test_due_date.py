@@ -27,3 +27,6 @@ def test_wrong_input_value_submit_datetime_working_hours():
 def test_wrong_input_value_turnaround_negative():
     with pytest.raises(ValueError):
         calculate_due_date(EXAMPLE_REPORT_DATETIME, -1)
+
+def test_0_hour_turnaround():
+    assert EXAMPLE_REPORT_DATETIME == calculate_due_date(EXAMPLE_REPORT_DATETIME, 0)

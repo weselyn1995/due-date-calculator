@@ -28,5 +28,4 @@ def calculate_due_date(submit_datetime: datetime, turnaround_hours: int) -> date
     if not turnaround_hours >= 0:
         raise ValueError('turnaround_hours must be 0 or more hours')
 
-    
-    pass
+    return submit_datetime
