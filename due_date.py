@@ -34,10 +34,16 @@ def calculate_due_date(submit_datetime: datetime, turnaround_hours: int) -> date
     if not turnaround_hours >= 0:
         raise ValueError('turnaround_hours must be 0 or more hours')
 
-    # Process turnaround time in working hours
-    while turnaround_hours > 0:
-        submit_datetime += timedelta(hours = 1)
-        if is_working_hour(submit_datetime.hour) and is_weekday(submit_datetime):
-            turnaround_hours -= 1
+    due_date = submit_datetime
+    remaining_hours = turnaround_hours
 
-    return submit_datetime
+    # Process due date
+    while remaining_hours > 0:
+        # Advance time by 1 hour
+        due_date += timedelta(hours = 1)
+        
+        # Only count working hours toward turnaround time
+        if is_working_hour(due_date.hour) and is_weekday(due_date):
+            remaining_hours -= 1
+    
+    return due_date
