@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 # Define working hours
 WORKING_HOURS_START = 9 # 9AM
@@ -27,5 +27,10 @@ def calculate_due_date(submit_datetime: datetime, turnaround_hours: int) -> date
         raise ValueError('reports must be submitted during working hours 9AM-5PM')
     if not turnaround_hours >= 0:
         raise ValueError('turnaround_hours must be 0 or more hours')
+
+    # Process turnaround time, ignoring working hours
+    while turnaround_hours > 0:
+        submit_datetime += timedelta(hours = 1)
+        turnaround_hours -= 1
 
     return submit_datetime

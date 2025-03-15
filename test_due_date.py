@@ -30,3 +30,6 @@ def test_wrong_input_value_turnaround_negative():
 
 def test_0_hour_turnaround():
     assert EXAMPLE_REPORT_DATETIME == calculate_due_date(EXAMPLE_REPORT_DATETIME, 0)
+
+def test_1_hour_turnaround():
+    assert datetime(2024, 3, 11, 15, 12) == calculate_due_date(EXAMPLE_REPORT_DATETIME, 1)
