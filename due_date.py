@@ -27,9 +27,9 @@ def calculate_due_date(submit_datetime: datetime, turnaround_hours: int) -> date
     if not isinstance(turnaround_hours, int):
         raise TypeError('turnaround_hours must be an integer')
 
-    if not submit_datetime.weekday() < 5: # 1-4 are weekdays, 5-6 are Saturday and Sunday
+    if not is_weekday(submit_datetime):
         raise ValueError('reports must be submitted on weekdays')
-    if not WORKING_HOURS_START <= submit_datetime.hour < WORKING_HOURS_END:
+    if not is_working_hour(submit_datetime.hour):
         raise ValueError('reports must be submitted during working hours 9AM-5PM')
     if not turnaround_hours >= 0:
         raise ValueError('turnaround_hours must be 0 or more hours')
