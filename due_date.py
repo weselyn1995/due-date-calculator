@@ -4,6 +4,9 @@ from datetime import datetime, timedelta
 WORKING_HOURS_START = 9 # 9AM
 WORKING_HOURS_END = 17 # 5PM
 
+def is_working_hour(hour):
+    return WORKING_HOURS_START <= hour < WORKING_HOURS_END
+
 def calculate_due_date(submit_datetime: datetime, turnaround_hours: int) -> datetime:
     """
     Args:
@@ -28,9 +31,10 @@ def calculate_due_date(submit_datetime: datetime, turnaround_hours: int) -> date
     if not turnaround_hours >= 0:
         raise ValueError('turnaround_hours must be 0 or more hours')
 
-    # Process turnaround time, ignoring working hours
+    # Process turnaround time in working hours, ignoring weekends
     while turnaround_hours > 0:
         submit_datetime += timedelta(hours = 1)
-        turnaround_hours -= 1
+        if is_working_hour(submit_datetime.hour):
+            turnaround_hours -= 1
 
     return submit_datetime

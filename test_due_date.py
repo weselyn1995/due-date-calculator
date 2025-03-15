@@ -33,3 +33,6 @@ def test_0_hour_turnaround():
 
 def test_1_hour_turnaround():
     assert datetime(2024, 3, 11, 15, 12) == calculate_due_date(EXAMPLE_REPORT_DATETIME, 1)
+
+def test_1_day_turnaround():
+    assert datetime(2024, 3, 12, 14, 12) == calculate_due_date(EXAMPLE_REPORT_DATETIME, 8)
